@@ -5,11 +5,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const db = mongoose.connection;
-const cors = require('cors')
-const userSchema = require('./models/userSchema.js')
+const cors = require("cors");
+const userSchema = require("./models/userSchema.js");
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 require("dotenv").config();
 
 // const passwordDb = require("./models/passwordDb.js"); // import data to server
@@ -59,35 +59,38 @@ app.use(express.json()); // returns middleware that only parses JSON - may or ma
 // 	console.log("Added password data successfully");
 // });
 
+// app.get("/", (req, res) => {
+// 	res.send("hello world");
+// });
+
 app.get("/", (req, res) => {
-	res.send("hello world");
+	userSchema.find({}, (err, findCard) => {
+		res.json(findCard);
+	});
 });
 
-app.get('/', (req, res) => {
-    userSchema.find({}, (err, findCard) => {
-        res.json(findCard)
-    })
-});
-
-app.post('/P3', (req, res)=>{
+app.post("/create", (req, res) => {
 	userSchema.create(req.body, (err, createdCard) => {
 		res.json(createdCard);
-	})
-  });
-
-  app.put('/P3/:id', (req, res) => {
-    userSchema.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updateCard) => {
-      res.json(updateCard)
-    })
+	});
 });
 
-app.delete('/P3/:id', (req, res) => {
-    userSchema.findByIdAndRemove(req.params.id, (err, deleteCard) => {
-      res.json(deleteCard)
-    })
+app.put("/P3/:id", (req, res) => {
+	userSchema.findByIdAndUpdate(
+		req.params.id,
+		req.body,
+		{ new: true },
+		(err, updateCard) => {
+			res.json(updateCard);
+		}
+	);
 });
 
-
+app.delete("/P3/:id", (req, res) => {
+	userSchema.findByIdAndRemove(req.params.id, (err, deleteCard) => {
+		res.json(deleteCard);
+	});
+});
 
 // app.get("/dashboard", (req, res) => {
 // 	schema.find({}, (err, data) => {
