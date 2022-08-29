@@ -5,6 +5,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const db = mongoose.connection;
+const cors = require('cors')
+const userSchema = require('./models/userSchema.js')
+
+app.use(express.json())
+app.use(cors())
 require("dotenv").config();
 
 // const passwordDb = require("./models/passwordDb.js"); // import data to server
@@ -54,15 +59,32 @@ app.use(express.json()); // returns middleware that only parses JSON - may or ma
 // 	console.log("Added password data successfully");
 // });
 
-app.get("/", (req, res) => {
-	res.send("hello world");
+app.get('/', (req, res) => {
+    userSchema.find({}, (err, findCard) => {
+        res.json(findCard)
+    })
 });
 
-// app.post("/dashboard", (req, res) => {
-// 	schema.create(req.body, (error, createdItem) => {
-// 		res.redirect("/dashboard");
-// 	});
-// });
+app.post('/P3', (req, res)=>{
+	userSchema.create(req.body, (err, createdCard) => {
+		res.json(createdCard);
+	})
+  });
+
+  app.put('/P3/:id', (req, res) => {
+    userSchema.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updateCard) => {
+      res.json(updateCard)
+    })
+});
+
+app.delete('/P3/:id', (req, res) => {
+    userSchema.findByIdAndRemove(req.params.id, (err, deleteCard) => {
+      res.json(deleteCard)
+    })
+});
+
+
+
 // app.get("/dashboard", (req, res) => {
 // 	schema.find({}, (err, data) => {
 // 		res.render("dashboard.ejs", { schema: data });
@@ -94,13 +116,24 @@ app.get("/", (req, res) => {
 // 		}
 // 	);
 // });
-// app.delete("/dashboard/:id", (req, res) => {
-// 	schema.findByIdAndRemove(req.params.id, (err, data) => {
-// 		res.redirect("/dashboard");
-// 	});
+
+// app.delete('/dashboard/:id', (req, res) => {
+//     D2.findByIdAndRemove(req.params.id, (err, deleteCard) => {
+//       res.json(deleteCard)
+//     })
 // });
 
 //___________________
 //Listener
 //___________________
 app.listen(PORT, () => console.log("Listening on port:", PORT));
+
+//TO RUN LOCAL, UNCOMMENT BELLOW
+
+// mongoose.connect('mongodb://localhost:27017/D2')
+// mongoose.connection.once('open', () => {
+//     console.log('connected to mongodb...');
+// })
+// app.listen(3000, () => {
+//   console.log('listening...');
+// })
