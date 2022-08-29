@@ -13,6 +13,12 @@ const schema = new mongoose.Schema(
 }
 );
 
+
+
 const userSchema = mongoose.model('userSchema', schema);
 
 module.exports = userSchema;
+
+
+
+
