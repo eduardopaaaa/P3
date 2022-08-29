@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const app = express();
 const db = mongoose.connection;
 const cors = require('cors')
-const userSchema = require('./project3_backend/models/userSchema.js')
+const userSchema = require('./models/userSchema.js')
 
 app.use(express.json())
 app.use(cors())
