@@ -1,18 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema(
-  {
+const schema = new mongoose.Schema({
+	username: String,
+	image: String,
+	video: String,
+	comment: String,
+	likes: Number,
+	caption: String,
+});
 
-    
-    library: String,
-    book: String,
-    card: String,
-    image: String,
-    readCheck: {type:Boolean, default: false}
-
-}
-);
-
-const userSchema = mongoose.model('userSchema', schema);
+const userSchema = mongoose.model("userSchema", schema);
 
 module.exports = userSchema;
