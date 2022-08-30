@@ -47,22 +47,6 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false })); // extended: false - does not allow nested objects in query strings
 app.use(express.json()); // returns middleware that only parses JSON - may or may not need it depending on your project
 
-//use method override
-// app.use(methodOverride("_method")); // allow POST, PUT and DELETE from a form
-
-//___________________
-// Routes
-//___________________
-//localhost:3000
-
-// schema.create(passwordDb, (err, data) => {
-// 	console.log("Added password data successfully");
-// });
-
-// app.get("/", (req, res) => {
-// 	res.send("hello world");
-// });
-
 app.get("/", (req, res) => {
 	userSchema.find({}, (err, findCard) => {
 		res.json(findCard);
@@ -75,7 +59,7 @@ app.post("/create", (req, res) => {
 	});
 });
 
-app.put("/P3/:id", (req, res) => {
+app.put("/update/:id", (req, res) => {
 	userSchema.findByIdAndUpdate(
 		req.params.id,
 		req.body,
@@ -86,49 +70,11 @@ app.put("/P3/:id", (req, res) => {
 	);
 });
 
-app.delete("/P3/:id", (req, res) => {
+app.delete("/delete/:id", (req, res) => {
 	userSchema.findByIdAndRemove(req.params.id, (err, deleteCard) => {
 		res.json(deleteCard);
 	});
 });
-
-// app.get("/dashboard", (req, res) => {
-// 	schema.find({}, (err, data) => {
-// 		res.render("dashboard.ejs", { schema: data });
-// 	});
-// });
-// app.get("/construction", (req, res) => {
-// 	schema.find({}, (err, data) => {
-// 		res.render("construction.ejs", { schema: data });
-// 	});
-// });
-// app.get("/dashboard/new", (req, res) => {
-// 	res.render("dashboardnew.ejs");
-// });
-// app.get("/dashboard/:id/edit", (req, res) => {
-// 	schema.findById(req.params.id, (err, found) => {
-// 		res.render("edit.ejs", {
-// 			schema: found,
-// 		});
-// 	});
-// });
-
-// app.put("/dashboard/:id", (req, res) => {
-// 	schema.findByIdAndUpdate(
-// 		req.params.id,
-// 		req.body,
-// 		{ new: true },
-// 		(err, updatedModel) => {
-// 			res.redirect("/dashboard");
-// 		}
-// 	);
-// });
-
-// app.delete('/dashboard/:id', (req, res) => {
-//     D2.findByIdAndRemove(req.params.id, (err, deleteCard) => {
-//       res.json(deleteCard)
-//     })
-// });
 
 //___________________
 //Listener
