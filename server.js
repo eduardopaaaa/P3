@@ -54,7 +54,7 @@ app.post("/create", (req, res) => {
 	});
 });
 
-app.patch("/update/:id", (req, res) => {
+app.put("/update/:id", (req, res) => {
 	userSchema.findByIdAndUpdate(
 		req.params.id,
 		req.body,
