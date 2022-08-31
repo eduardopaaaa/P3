@@ -9,16 +9,7 @@ const cors = require("cors");
 const userSchema = require("./models/userSchema.js");
 
 app.use(express.json());
-let corsOptions = {
-	origin: [
-		"http://localhost:3000",
-		"https://obscure-retreat-97969.herokuapp.com/",
-	],
-	credentials: true,
-	methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-};
-app.use(cors(corsOptions));
-// app.use(cors());
+app.use(cors());
 require("dotenv").config();
 
 // const passwordDb = require("./models/passwordDb.js"); // import data to server
@@ -63,7 +54,7 @@ app.post("/create", (req, res) => {
 	});
 });
 
-app.put("/update/:id", (req, res) => {
+app.p("/update/:id", (req, res) => {
 	userSchema.findByIdAndUpdate(
 		req.params.id,
 		req.body,
